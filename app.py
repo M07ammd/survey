@@ -105,12 +105,12 @@ encoders, _ = prepare_encoders()
 feature_cols = get_feature_columns()
 
 # Header
-st.title("🧠 Autism Spectrum Disorder Prediction System")
+st.title("ASD Prediction System")
 st.markdown("**AI-Powered Assessment Tool**")
 st.markdown("---")
 
 # Create tabs
-tab1, tab2, tab3 = st.tabs(["🔍 Single Prediction", "📊 Batch Testing", "ℹ️ About"])
+tab1, tab2, tab3 = st.tabs(["🔍 Prediction", "📊"])
 
 # ==================== TAB 1: Single Prediction ====================
 with tab1:
@@ -120,7 +120,7 @@ with tab1:
     
     # Demographics
     with col1:
-        st.subheader("👤 Demographics")
+        st.subheader("👤")
         age = st.number_input("Age", min_value=0, max_value=100, value=25)
         gender = st.selectbox("Gender", ["m", "f"])
         ethnicity = st.selectbox("Ethnicity", 
@@ -128,7 +128,7 @@ with tab1:
              "Middle Eastern", "Others", "?"])
         
     with col2:
-        st.subheader("🏥 Medical History")
+        st.subheader("🏥")
         jaundice = st.selectbox("Jaundice at Birth", ["yes", "no"])
         autism = st.selectbox("Family History of Autism", ["yes", "no"])
         relation = st.selectbox("Relation Type", ["Self", "Parent", "Health care professional", 
@@ -137,8 +137,7 @@ with tab1:
             ["United States", "United Kingdom", "Canada", "Australia", "India", "Others"])
         used_app = st.selectbox("Used App Before", ["yes", "no"])
     
-    st.subheader("📋 Autism Spectrum Quotient (AQ) Test Questions")
-    st.markdown("**Score 1 for each agreement, 0 for each disagreement**")
+    st.subheader("Test Questions")
     
     scores = []
     cols = st.columns(5)
@@ -161,7 +160,7 @@ with tab1:
             score = st.checkbox(f"A{i+1}", key=f"q{i}")
             scores.append(1 if score else 0)
     
-    result_score = st.number_input("AQ Test Score (0-10)", min_value=0, max_value=10, value=5)
+    result_score = st.number_input("AQ Test Score", min_value=0, max_value=10, value=5)
     
     # Safe encoding function
     def safe_transform(le, value):
@@ -214,7 +213,7 @@ with tab1:
             if prediction == 1:
                 st.markdown(f"""
                     <div class="autism-high">
-                        <h2>⚠️ Likely Autistic Traits Detected</h2>
+                        <h2>Likely Autistic Traits Detected</h2>
                         <h3 style="font-size: 2.5rem; margin: 10px 0;">{autism_prob:.1f}%</h3>
                         <p style="font-size: 1.1rem;">Risk of Autism Spectrum Disorder</p>
                     </div>
@@ -222,7 +221,7 @@ with tab1:
             else:
                 st.markdown(f"""
                     <div class="autism-low">
-                        <h2>✅ Low Risk Assessment</h2>
+                        <h2>Low Risk Assessment</h2>
                         <h3 style="font-size: 2.5rem; margin: 10px 0;">{autism_prob:.1f}%</h3>
                         <p style="font-size: 1.1rem;">Risk of Autism Spectrum Disorder</p>
                     </div>
@@ -320,52 +319,6 @@ with tab2:
             st.metric("High Risk Cases", high_risk)
         with col3:
             st.metric("Average Risk %", f"{np.mean([float(r['Autism Risk %'].rstrip('%')) for r in results]):.1f}%")
-
-# ==================== TAB 3: About ====================
-with tab3:
-    st.header("ℹ️ About This System")
-    
-    st.markdown("""
-    ### 🎯 Purpose
-    This system uses a **Random Forest Machine Learning Model** to assess the probability of 
-    Autism Spectrum Disorder (ASD) based on screening questionnaire responses and demographic information.
-    
-    ### 📊 Model Performance
-    - **Accuracy**: ~92-95%
-    - **F1 Score**: High precision and recall
-    - **ROC-AUC**: Excellent discrimination ability
-    
-    ### 📋 Input Features
-    1. **10 Autism Screening Questions** (A1-A10)
-    2. **Demographics**: Age, Gender, Ethnicity
-    3. **Medical History**: Jaundice, Family History of Autism
-    4. **Location**: Country of Residence
-    5. **Other**: App usage, Relation type
-    
-    ### ⚠️ Important Disclaimer
-    **This is a screening tool, NOT a medical diagnosis.**
-    - Results should only be used for initial assessment
-    - Always consult with a qualified healthcare professional for formal diagnosis
-    - This tool is based on statistical patterns, not medical expertise
-    
-    ### 📈 How It Works
-    1. **Data Collection**: Gather information from the screening questionnaire
-    2. **Preprocessing**: Encode and normalize the data
-    3. **Prediction**: Random Forest model generates probability score
-    4. **Interpretation**: Display risk level and probability
-    
-    ### 🔒 Privacy
-    Your data is processed locally. No data is stored or transmitted.
-    
-    ### 📚 Dataset
-    - **Total Records**: ~700 individuals
-    - **Features**: 21 variables
-    - **Target**: Autism Spectrum Disorder (Binary: Yes/No)
-    
-    """)
-    
-    st.markdown("---")
-    st.markdown("Built with ❤️ using Streamlit and Machine Learning | 2024")
 
 # Footer
 st.markdown("---")
