@@ -71,7 +71,7 @@ def prepare_encoders():
     # Basic preprocessing
     data['age'] = data['age'].apply(lambda x: int(float(x)) if pd.notna(x) else 0)
     data = data.rename(columns={'austim':'autism', 'contry_of_res':'Country_of_res'})
-    data = data.drop(columns=['age_desc','ID'], axis=1)
+    data = data.drop(columns=['age_desc','ID'])
     data['ethnicity'] = data['ethnicity'].replace('?', data['ethnicity'].mode()[0])
     data['ethnicity'] = data['ethnicity'].replace('others','Others')
     data['relation'] = data['relation'].replace('?', data['relation'].mode()[0])
