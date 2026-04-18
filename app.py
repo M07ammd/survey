@@ -110,7 +110,7 @@ st.markdown("**AI-Powered Assessment Tool**")
 st.markdown("---")
 
 # Create tabs
-tab1, tab2, tab3 = st.tabs(["🔍 Prediction", "📊"])
+tab1, tab2 = st.tabs(["🔍 Prediction", "📊"])
 
 # ==================== TAB 1: Single Prediction ====================
 with tab1:
@@ -266,11 +266,11 @@ with tab1:
 
 # ==================== TAB 2: Batch Testing ====================
 with tab2:
-    st.header("📊 Batch Testing")
+    st.header("Batch Testing")
     st.markdown("Test multiple cases at once")
     
     # Create sample data for testing
-    if st.button("📥 Load 10 Test Cases from Dataset", use_container_width=True):
+    if st.button("Load 10 Test Cases from Dataset", use_container_width=True):
         # Load data
         csv_path = os.path.join(BASE_DIR, 'Autism_data.csv')
         data = pd.read_csv(csv_path)
